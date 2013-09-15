@@ -1,31 +1,43 @@
-var model, slides;
+var config = {
 
-function queueSlides (table){
-  _.map(table, function(entity){
-    console.log(entity);
-    slides.queue(entity["message"], null, entity["background-color"]);
-  });
-}
+  // Slide duration (ms). Also defines how frequently we poll for updates.
+  duration: 7000,
+
+  // Publish URL
+  url:  "https://docs.google.com/spreadsheet/pub?key=0AucQr5RmPlQ-dGpDd0JmZ0NzRDdjMFBQbTVaMjJlMXc&output=html",
+
+  // Number of columns in the table
+  table_width: 2
+
+};
+
+var model, slides;
 
 $(document).ready(function(){
 
-  // Auto Advance Slides
+  // Automatically progress through slides.
   slides = new SlideSet();
-  setInterval(function(){slides.next();}, 7000);
+  setInterval(function(){slides.next();}, config.duration);
 
-  // Set up our data model
+  // Set up the Google spreadsheet.
   model = new GoogleSpreadsheet();
-  model.url("https://docs.google.com/spreadsheet/pub?key=0AucQr5RmPlQ-dGpDd0JmZ0NzRDdjMFBQbTVaMjJlMXc&output=html");
-  model.setColumns(2);
+  model.url(config.url);
+  model.setColumns(config.table_width);
 
-  // Sync our model with our slides
+  // Load a table into the slides (SlideSet).
+  var queueSlides = function (table){
+    _.map(table, function(entity){
+      slides.queue(entity["message"], null, entity["background-color"]);
+    });
+  };
+
+  // Fetch data from the spreadsheet, and use queueSlides to generate the slides.
   model.sync(queueSlides);
 
-  // Listen for changes to the model.
+  // Poll for updates to the spreadsheet, and apply the needed changes.
   setInterval(function(){model.sync(undefined, function(newtable){
-    console.log("Change detected - updating slides");
     slides.clearTable();
     queueSlides(newtable);
-  })}, 7000);
+  })}, config.duration);
 
 });

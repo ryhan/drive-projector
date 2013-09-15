@@ -1,11 +1,18 @@
-/* sync spreadsheet */
+// Makes GoogleSpreadsheet (spreadsheet.js) more useful.
 
 $(document).ready(function(){
 
+  /*
+   * Set the number of columns in a table.
+   */
   GoogleSpreadsheet.prototype.setColumns = function(columns){
     this.columns = columns;
   }
 
+  /*
+   * @given cb callback for current spreadsheet data.
+   * @given haschangedCB callback for any changes to spreadsheet data.
+   */
   GoogleSpreadsheet.prototype.sync = function(cb, haschangedCB){
 
     var self = this;
