@@ -1,9 +1,12 @@
-living-projector
-================
+## Drive Projector
 
-Displays a cycling sequence of slides in the browser based on data in a Google Drive spreadsheet. Useful for remotely managing (and updating) messages across multiple projectors controlled by independent computers. Intended to be used with Chrome in presentation mode.
+When running a big event, it's often useful to have a bunch of projectors displaying a cycling sequence of messages. 
+This tool lets event organizers centralize their messages into a Google Drive spreadsheet and instantly update the slides being shown on every display.
+Setting up a display is as simple as pointing Chrome to a url and going into full-screen mode.
 
-### Google Drive Setup
+Questions? Bug [Ryhan](https://github.com/ryhan).
+
+### Google Spreadsheet Setup
 
 #### 1. Create your spreadsheet, and format it as follows.
 
@@ -18,3 +21,4 @@ Take a look at this [example spreadsheet](https://docs.google.com/spreadsheet/pu
 - Select "File" > "Publish to the web".
 - Enable publishing all sheets, and make sure "Automatically republish when changes are made" is on.
 - Copy the url under "Get a link to the published data", and paste it into the `config.url` field in `js/app.js`.
+
